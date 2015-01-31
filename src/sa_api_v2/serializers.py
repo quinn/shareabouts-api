@@ -569,6 +569,9 @@ class SubmittedThingSerializer (ActivityGenerator, DataBlobProcessor):
             if hasattr(self, 'object') and self.object is not None:
                 result['submitter'] = self.object.submitter
 
+            elif 'submitter_username' in data:
+                result['submitter'] = models.User.objects.get(username=data['submitter_username'])
+
             # Otherwise, set the submitter to the current user
             else:
                 request = self.context.get('request')
